@@ -26,7 +26,7 @@ var counter Output
 func HandleRequest(_ /*ctx*/ context.Context, _ /*in*/ Input) (Output, error) {
 	counter.Count++
 
-	value, err := cache.Get("key1")
+	value, _, err := cache.Get("key1")
 	if err != nil {
 		slog.Error("cache error", "error", err)
 	}
@@ -40,7 +40,6 @@ var cache = newCache()
 
 func newCache() *lambdacache.Cache {
 	options := lambdacache.Options{
-		Debug:    true,
 		Retrieve: getInfo,
 	}
 	return lambdacache.New(options)
